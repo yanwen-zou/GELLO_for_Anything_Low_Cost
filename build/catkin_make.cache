@@ -1,0 +1,2 @@
+xarm_sys
+-DCATKIN_DEVEL_PREFIX=/home/zyw/zyw_ws/xarm_ws/devel -DCMAKE_INSTALL_PREFIX=/home/zyw/zyw_ws/xarm_ws/install -G Unix Makefiles

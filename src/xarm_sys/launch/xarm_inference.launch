@@ -1,0 +1,13 @@
+<launch>
+  <!-- 启动相机节点（ -->
+  <node pkg="xarm_sys" type="cam_pub.py" name="cam_1" output="screen" />
+  <!-- 可以加更多摄像头：
+  <node pkg="xarm_sys" type="cam_pub.py" name="cam_2" output="screen" />
+  -->
+
+  <!-- 启动机械臂接口节点 -->
+  <node pkg="xarm_sys" type="xarm_controller.py" name="arm_inter" output="screen" />
+
+  <!-- 启动 VLA 交互节点 -->
+  <node pkg="xarm_sys" type="model_interactor.py" name="vla_inter" output="screen" />
+</launch>
