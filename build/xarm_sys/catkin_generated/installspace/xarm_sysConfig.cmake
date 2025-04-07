@@ -67,14 +67,14 @@ set(xarm_sys_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
-  set(xarm_sys_SOURCE_PREFIX /home/zyw/zyw_ws/xarm_ws/src/xarm_sys)
-  set(xarm_sys_DEVEL_PREFIX /home/zyw/zyw_ws/xarm_ws/devel)
+  set(xarm_sys_SOURCE_PREFIX /root/xarm_ws/src/xarm_sys)
+  set(xarm_sys_DEVEL_PREFIX /root/xarm_ws/devel)
   set(xarm_sys_INSTALL_PREFIX "")
   set(xarm_sys_PREFIX ${xarm_sys_DEVEL_PREFIX})
 else()
   set(xarm_sys_SOURCE_PREFIX "")
   set(xarm_sys_DEVEL_PREFIX "")
-  set(xarm_sys_INSTALL_PREFIX /home/zyw/zyw_ws/xarm_ws/install)
+  set(xarm_sys_INSTALL_PREFIX /root/xarm_ws/install)
   set(xarm_sys_PREFIX ${xarm_sys_INSTALL_PREFIX})
 endif()
 
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/zyw/zyw_ws/xarm_ws/install/lib;/opt/ros/noetic/lib)
+    foreach(path /root/xarm_ws/install/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

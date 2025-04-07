@@ -1,8 +1,8 @@
-# Install script for directory: /home/zyw/zyw_ws/xarm_ws/src/xarm_sys
+# Install script for directory: /root/xarm_ws/src/xarm_sys
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/zyw/zyw_ws/xarm_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/root/xarm_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,17 +38,17 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/zyw/zyw_ws/xarm_ws/build/xarm_sys/catkin_generated/installspace/xarm_sys.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/root/xarm_ws/build/xarm_sys/catkin_generated/installspace/xarm_sys.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/xarm_sys/cmake" TYPE FILE FILES
-    "/home/zyw/zyw_ws/xarm_ws/build/xarm_sys/catkin_generated/installspace/xarm_sysConfig.cmake"
-    "/home/zyw/zyw_ws/xarm_ws/build/xarm_sys/catkin_generated/installspace/xarm_sysConfig-version.cmake"
+    "/root/xarm_ws/build/xarm_sys/catkin_generated/installspace/xarm_sysConfig.cmake"
+    "/root/xarm_ws/build/xarm_sys/catkin_generated/installspace/xarm_sysConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/xarm_sys" TYPE FILE FILES "/home/zyw/zyw_ws/xarm_ws/src/xarm_sys/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/xarm_sys" TYPE FILE FILES "/root/xarm_ws/src/xarm_sys/package.xml")
 endif()
 

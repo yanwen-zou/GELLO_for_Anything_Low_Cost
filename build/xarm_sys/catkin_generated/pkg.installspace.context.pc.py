@@ -4,5 +4,5 @@ PROJECT_PKG_CONFIG_INCLUDE_DIRS = "".split(';') if "" != "" else []
 PROJECT_CATKIN_DEPENDS = "".replace(';', ' ')
 PKG_CONFIG_LIBRARIES_WITH_PREFIX = "".split(';') if "" != "" else []
 PROJECT_NAME = "xarm_sys"
-PROJECT_SPACE_DIR = "/home/zyw/zyw_ws/xarm_ws/install"
+PROJECT_SPACE_DIR = "/root/xarm_ws/install"
 PROJECT_VERSION = "0.0.0"

@@ -1,40 +1,42 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import rospy
-from std_msgs.msg import String
+import cv2
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
 
 class CameraNode:
     def __init__(self):
-        rospy.init_node('cam_1')  # 示例用 cam-1
-        #TODO: Put the camera initialization process here
-        self.pub = rospy.Publisher('/cam-1', String, queue_size=10) 
-        #TODO:Change String to Image when connecting to real cam. Here only for test.
-        rospy.Timer(rospy.Duration(1), self.publish_image) #TODO: Frequency to be modified
+        rospy.init_node('cam_1')
+        self.bridge = CvBridge()
+
+        # 打开摄像头（默认设备0），GoPro一般也能识别为VideoCapture设备
+        self.cap = cv2.VideoCapture(0)
+        if not self.cap.isOpened():
+            rospy.logerr("Failed to open camera.")
+            raise RuntimeError("Cannot open camera.")
+
+        self.pub = rospy.Publisher('/cam_1', Image, queue_size=10)
+        rospy.Timer(rospy.Duration(0.1), self.publish_image)  # 10Hz 可调
 
     def publish_image(self, event):
-        img_data = "simulated_image_data"
-        self.pub.publish(img_data)
-        rospy.loginfo("Published image data")
-
-        #TODO: Get img through cam API. Following can be reference for processing
-
-        '''
-        color_frame = frames.get_color_frame()
-
-        if not color_frame:
+        ret, frame = self.cap.read()
+        if not ret:
+            rospy.logwarn("Failed to capture image.")
             return
 
-        color_image = np.asanyarray(color_frame.get_data())
-        rgb_image = cv2.cvtColor(color_image, cv2.COLOR_BGR2RGB)
-        # 转换 OpenCV 图像为 ROS 1 消息
-        ros_image = self.bridge.cv2_to_imgmsg(rgb_image, encoding='rgb8')
+        # OpenCV 默认是 BGR 格式
+        ros_img = self.bridge.cv2_to_imgmsg(frame, encoding='bgr8')
+        self.pub.publish(ros_img)
+        rospy.loginfo("Published real image from camera")
 
-        # 发布到 ROS 1
-        self.publisher.publish(ros_image)
-        rospy.loginfo(f'Published image from camera {self.serial}')
-        self.pub.publish(img_data)
-        rospy.loginfo("Published image data")
-        '''
+    def __del__(self):
+        if self.cap.isOpened():
+            self.cap.release()
+            rospy.loginfo("Camera released.")
 
 if __name__ == '__main__':
-    CameraNode()
-    rospy.spin()
+    try:
+        CameraNode()
+        rospy.spin()
+    except rospy.ROSInterruptException:
+        pass

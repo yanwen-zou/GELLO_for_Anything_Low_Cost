@@ -1,21 +1,21 @@
 Performing C SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD failed with the following output:
-Change Dir: /home/zyw/zyw_ws/xarm_ws/build/CMakeFiles/CMakeTmp
+Change Dir: /root/xarm_ws/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_949e7/fast && /usr/bin/make -f CMakeFiles/cmTC_949e7.dir/build.make CMakeFiles/cmTC_949e7.dir/build
-make[1]: Entering directory '/home/zyw/zyw_ws/xarm_ws/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_949e7.dir/src.c.o
-/usr/bin/cc   -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_949e7.dir/src.c.o   -c /home/zyw/zyw_ws/xarm_ws/build/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_949e7
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_949e7.dir/link.txt --verbose=1
-/usr/bin/cc  -DCMAKE_HAVE_LIBC_PTHREAD    -rdynamic CMakeFiles/cmTC_949e7.dir/src.c.o  -o cmTC_949e7 
-/usr/bin/ld: CMakeFiles/cmTC_949e7.dir/src.c.o: in function `main':
+Run Build Command(s):/usr/bin/make cmTC_5103f/fast && /usr/bin/make -f CMakeFiles/cmTC_5103f.dir/build.make CMakeFiles/cmTC_5103f.dir/build
+make[1]: Entering directory '/root/xarm_ws/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_5103f.dir/src.c.o
+/usr/bin/cc   -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_5103f.dir/src.c.o   -c /root/xarm_ws/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_5103f
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5103f.dir/link.txt --verbose=1
+/usr/bin/cc  -DCMAKE_HAVE_LIBC_PTHREAD    -rdynamic CMakeFiles/cmTC_5103f.dir/src.c.o  -o cmTC_5103f 
+/usr/bin/ld: CMakeFiles/cmTC_5103f.dir/src.c.o: in function `main':
 src.c:(.text+0x46): undefined reference to `pthread_create'
 /usr/bin/ld: src.c:(.text+0x52): undefined reference to `pthread_detach'
 /usr/bin/ld: src.c:(.text+0x63): undefined reference to `pthread_join'
 collect2: error: ld returned 1 exit status
-make[1]: *** [CMakeFiles/cmTC_949e7.dir/build.make:87: cmTC_949e7] Error 1
-make[1]: Leaving directory '/home/zyw/zyw_ws/xarm_ws/build/CMakeFiles/CMakeTmp'
-make: *** [Makefile:121: cmTC_949e7/fast] Error 2
+make[1]: *** [CMakeFiles/cmTC_5103f.dir/build.make:87: cmTC_5103f] Error 1
+make[1]: Leaving directory '/root/xarm_ws/build/CMakeFiles/CMakeTmp'
+make: *** [Makefile:121: cmTC_5103f/fast] Error 2
 
 
 Source file was:
@@ -39,20 +39,20 @@ int main(void)
 }
 
 Determining if the function pthread_create exists in the pthreads failed with the following output:
-Change Dir: /home/zyw/zyw_ws/xarm_ws/build/CMakeFiles/CMakeTmp
+Change Dir: /root/xarm_ws/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_eb804/fast && /usr/bin/make -f CMakeFiles/cmTC_eb804.dir/build.make CMakeFiles/cmTC_eb804.dir/build
-make[1]: Entering directory '/home/zyw/zyw_ws/xarm_ws/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_eb804.dir/CheckFunctionExists.c.o
-/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_eb804.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.16/Modules/CheckFunctionExists.c
-Linking C executable cmTC_eb804
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_eb804.dir/link.txt --verbose=1
-/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_eb804.dir/CheckFunctionExists.c.o  -o cmTC_eb804  -lpthreads 
+Run Build Command(s):/usr/bin/make cmTC_c0b37/fast && /usr/bin/make -f CMakeFiles/cmTC_c0b37.dir/build.make CMakeFiles/cmTC_c0b37.dir/build
+make[1]: Entering directory '/root/xarm_ws/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_c0b37.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_c0b37.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.16/Modules/CheckFunctionExists.c
+Linking C executable cmTC_c0b37
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c0b37.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_c0b37.dir/CheckFunctionExists.c.o  -o cmTC_c0b37  -lpthreads 
 /usr/bin/ld: cannot find -lpthreads
 collect2: error: ld returned 1 exit status
-make[1]: *** [CMakeFiles/cmTC_eb804.dir/build.make:87: cmTC_eb804] Error 1
-make[1]: Leaving directory '/home/zyw/zyw_ws/xarm_ws/build/CMakeFiles/CMakeTmp'
-make: *** [Makefile:121: cmTC_eb804/fast] Error 2
+make[1]: *** [CMakeFiles/cmTC_c0b37.dir/build.make:87: cmTC_c0b37] Error 1
+make[1]: Leaving directory '/root/xarm_ws/build/CMakeFiles/CMakeTmp'
+make: *** [Makefile:121: cmTC_c0b37/fast] Error 2
 
 
 

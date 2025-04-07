@@ -1,4 +1,4 @@
-prefix=/home/zyw/zyw_ws/xarm_ws/install
+prefix=/root/xarm_ws/install
 
 Name: xarm_sys
 Description: Description of xarm_sys
