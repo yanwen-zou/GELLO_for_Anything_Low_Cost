@@ -17,11 +17,12 @@ class Recorder:
 
         self.latest_image = None
         self.latest_state = None
+        self.latest_action = None
         self.episode = []
 
         rospy.Subscriber('/cam_1', Image, self.image_callback)
         rospy.Subscriber('/robot_state', Float64MultiArray, self.state_callback)
-
+        rospy.Subscriber('/robot_action', Float64MultiArray, self.action_callback)
         rospy.on_shutdown(self.save_episode)
         rospy.loginfo("Recorder initialized and listening...")
 
@@ -41,16 +42,23 @@ class Recorder:
             self.latest_state = msg.data
             self.try_record()
 
+    def action_callback(self, msg):
+        with self.lock:
+            self.latest_action = msg.data
+            self.try_record()
+
     def try_record(self):
-        if self.latest_image is not None and self.latest_state is not None:
+        if self.latest_image is not None and self.latest_state is not None and self.latest_action is not None:
             ts = {
                 "image": self.latest_image.copy(),
-                "state": np.array(self.latest_state)
+                "state": np.array(self.latest_state),
+                "action": np.array(self.latest_action)
             }
             self.episode.append(ts)
             rospy.loginfo(f"Recorded step {len(self.episode)}")
             self.latest_image = None
             self.latest_state = None
+            self.latest_action = None
 
     def save_episode(self):
         if not self.episode:
