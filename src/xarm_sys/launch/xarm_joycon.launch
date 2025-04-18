@@ -1,0 +1,7 @@
+<launch>
+  <node name="xarm_joycon_node"
+        pkg="xarm_sys"
+        type="lerobot_joycon_gpos_xarm6_new.py"
+        output="screen"
+        cwd="node" />
+</launch>

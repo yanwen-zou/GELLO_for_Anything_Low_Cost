@@ -1,0 +1,8 @@
+prefix=/home/bozhao_4060_2/ros_ws/install
+
+Name: xarm_sys
+Description: Description of xarm_sys
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
