@@ -16,7 +16,7 @@ class CameraNode:
             raise RuntimeError("Cannot open camera.")
 
         self.pub = rospy.Publisher('/cam_1', Image, queue_size=10)
-        rospy.Timer(rospy.Duration(0.1), self.publish_image)  # 10Hz 可调
+        rospy.Timer(rospy.Duration(0.03), self.publish_image)  # 10Hz 可调
 
     def publish_image(self, event):
         ret, frame = self.cap.read()
@@ -27,7 +27,7 @@ class CameraNode:
         # OpenCV 默认是 BGR 格式
         ros_img = self.bridge.cv2_to_imgmsg(frame, encoding='bgr8')
         self.pub.publish(ros_img)
-        rospy.loginfo("Published real image from camera")
+        # rospy.loginfo("Published real image from camera")
 
     def __del__(self):
         if self.cap.isOpened():

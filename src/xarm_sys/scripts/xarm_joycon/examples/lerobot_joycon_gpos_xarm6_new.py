@@ -213,8 +213,8 @@ try:
                 action_msg = Float64MultiArray(data=curr_action_msg)
                 pub_state.publish(state_msg)
                 pub_action.publish(action_msg)
-                print("publish state", state_msg.data)
-                print("publish action", action_msg.data)
+                # print("publish state", state_msg.data)
+                # print("publish action", action_msg.data)
                 ############################################################
 
 

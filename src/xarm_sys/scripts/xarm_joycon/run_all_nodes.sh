@@ -7,19 +7,20 @@ trap "kill $PID1 $PID2 $PID3" SIGINT
 echo "Setting up ROS environment..."
 source ~/ros_ws/devel/setup.bash  # 确保环境变量加载
 
-# === 启动 cam_pub.py ===
-echo "Starting cam_pub.py..."
-rosrun xarm_sys scripts/xarm_joycon/cam_pub.py &
-PID1=$!
-echo "[INFO] cam_pub.py started with PID $PID1"
-sleep 2  # 等待 cam_pub 启动
 
 # === 启动 lerobot_joycon_gpos_xarm6_new.py ===
 echo "Starting lerobot_joycon_gpos_xarm6_new.py..."
 rosrun xarm_sys scripts/xarm_joycon/examples/lerobot_joycon_gpos_xarm6_new.py &
-PID2=$!
-echo "[INFO] lerobot_joycon_gpos_xarm6_new.py started with PID $PID2"
+PID1=$!
+echo "[INFO] lerobot_joycon_gpos_xarm6_new.py started with PID $PID1"
 sleep 2  # 等待 JoyCon 控制启动
+
+# === 启动 cam_pub.py ===
+echo "Starting cam_pub.py..."
+rosrun xarm_sys scripts/xarm_joycon/cam_pub.py &
+PID2=$!
+echo "[INFO] cam_pub.py started with PID $PID2"
+sleep 2  # 等待 cam_pub 启动
 
 # === 启动 episode_recorder.py ===
 echo "Starting episode_recorder.py..."

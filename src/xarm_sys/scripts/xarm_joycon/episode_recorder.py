@@ -4,17 +4,35 @@ import numpy as np
 import pickle
 import os
 import datetime
+import time
 from sensor_msgs.msg import Image
 from std_msgs.msg import Float64MultiArray
 from cv_bridge import CvBridge
 from threading import Lock
+import signal
+import sys
 
 import tensorflow as tf
-import tensorflow_datasets as tfds
 import rlds
-import cv2  # 用于编码图像
+import cv2
+import pyttsx3
+from num2words import num2words
+import re
+import subprocess
 
-# ✅ 兼容旧 tfds 的 rlds_signature 实现
+from xarm.wrapper import XArmAPI
+arm = XArmAPI('192.168.1.222')
+
+exit_flag = False
+
+def handle_shutdown(signum, frame):
+    global exit_flag
+    exit_flag = True
+    print("\n[Shutdown] Ctrl+C pressed. Cleaning up...")
+    rospy.signal_shutdown("Ctrl+C exit")
+
+signal.signal(signal.SIGINT, handle_shutdown)
+
 def rlds_signature(example: dict):
     def nested_spec(d):
         if isinstance(d, dict):
@@ -22,23 +40,30 @@ def rlds_signature(example: dict):
         return d
     return nested_spec(example)
 
+def speak(text: str):
+    try:
+        def replace_numbers(match):
+            return num2words(int(match.group()))
+        text = re.sub(r'\b\d+\b', replace_numbers, text)
+        subprocess.run(["espeak-ng", "-v", "en", "-s", "150", text])
+    except Exception as e:
+        rospy.logwarn(f"Speech failed: {e}")
 
 class Recorder:
     def __init__(self):
-        rospy.init_node('recorder')
         self.bridge = CvBridge()
         self.lock = Lock()
 
         self.latest_image = None
+        self.preview_image = None
         self.latest_state = None
         self.latest_action = None
         self.episode = []
+        self.recording = False
 
         rospy.Subscriber('/cam_1', Image, self.image_callback)
         rospy.Subscriber('/robot_state', Float64MultiArray, self.state_callback)
         rospy.Subscriber('/robot_action', Float64MultiArray, self.action_callback)
-        rospy.on_shutdown(self.save_episode)
-        rospy.loginfo("Recorder initialized and listening...")
 
     def image_callback(self, msg):
         try:
@@ -48,6 +73,7 @@ class Recorder:
             return
 
         with self.lock:
+            self.preview_image = cv_image.copy()
             self.latest_image = cv_image
             self.try_record()
 
@@ -62,6 +88,9 @@ class Recorder:
             self.try_record()
 
     def try_record(self):
+        if not self.recording:
+            return
+
         if self.latest_image is not None and self.latest_state is not None and self.latest_action is not None:
             ts = {
                 "image": self.latest_image.copy(),
@@ -70,30 +99,24 @@ class Recorder:
             }
             self.episode.append(ts)
             rospy.loginfo(f"Recorded step {len(self.episode)}")
-            self.latest_image = None
             self.latest_state = None
             self.latest_action = None
 
-    def save_episode(self):
+    def get_last_frame(self):
+        with self.lock:
+            if self.preview_image is not None:
+                return self.preview_image.copy()
+        return None
+
+    def save_episode(self, episode_id: int):
         if not self.episode:
             rospy.logwarn("No data recorded, skipping save.")
             return
 
-        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-        save_dir = os.path.expanduser("~/ros_save_data")
+        save_dir = os.path.expanduser("~/ros_save_data/pick_bottle_in_box")
         os.makedirs(save_dir, exist_ok=True)
 
-        # 保存为 .pkl（调试用）
-        pkl_path = os.path.join(save_dir, f"lerobot_episode_{timestamp}.pkl")
-        try:
-            with open(pkl_path, 'wb') as f:
-                pickle.dump(self.episode, f)
-            rospy.loginfo(f"Pickle episode saved to {pkl_path}")
-        except Exception as e:
-            rospy.logerr(f"Failed to save episode as pickle: {e}")
-
-        # 保存为 RLDS TFRecord
-        tfrecord_path = os.path.join(save_dir, f"lerobot_episode_{timestamp}")
+        tfrecord_path = os.path.join(save_dir, f"lerobot_episode_{episode_id}")
         try:
             rlds_episode = []
             for i, ts in enumerate(self.episode):
@@ -128,99 +151,86 @@ class Recorder:
         except Exception as e:
             rospy.logerr(f"Failed to save RLDS TFRecord: {e}")
 
+        self.episode = []
+
+def get_next_episode_id(save_dir: str) -> int:
+    existing = [f for f in os.listdir(save_dir) if f.startswith("lerobot_episode_")]
+    episode_ids = []
+    for name in existing:
+        try:
+            num = int(name.split("_")[-1])
+            episode_ids.append(num)
+        except:
+            continue
+    return max(episode_ids, default=0) + 1
 
 if __name__ == '__main__':
     try:
-        Recorder()
-        rospy.spin()
+        rospy.init_node('recorder')
+        recorder = Recorder()
+
+        num_episodes = 2
+        record_duration = 30
+        rest_duration = 30
+        continue_recording = True
+        save_dir = os.path.expanduser("~/ros_save_data/pick_bottle_in_box")
+        os.makedirs(save_dir, exist_ok=True)
+
+        start_id = get_next_episode_id(save_dir) if continue_recording else 1
+        init_qpos = np.radians([14.1, -8, -24.7, 196.9, 62.3, -8.8])
+
+        cv2.namedWindow("Recording Preview", cv2.WINDOW_NORMAL)
+        cv2.resizeWindow("Recording Preview", 640, 360)
+
+        for episode_id in range(start_id, start_id + num_episodes):
+            if exit_flag:
+                break
+
+            msg = f"recording episode {episode_id}"
+            rospy.loginfo(f"🔴 {msg}, duration {record_duration}s...")
+            speak(msg)
+
+            recorder.recording = True
+            start_time = time.time()
+            while time.time() - start_time < record_duration and not rospy.is_shutdown() and not exit_flag:
+                frame = recorder.get_last_frame()
+                if frame is not None:
+                    preview = frame.copy()
+                    cv2.putText(preview, f"Recording: {int(time.time()-start_time)} s", (20, 40),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
+                    cv2.imshow("Recording Preview", preview)
+                key = cv2.waitKey(10)
+                if key == ord('q'):
+                    rospy.loginfo("⏹️ Recording interrupted by user.")
+                    break
+
+            recorder.recording = False
+
+            if exit_flag:
+                break
+
+            speak(f"recording completed, saving episode {episode_id}")
+            recorder.save_episode(episode_id)
+
+            rospy.loginfo(f"✅ Episode {episode_id} saved. Resting for {rest_duration}s...\n")
+            speak(f"rest for {rest_duration} seconds")
+            speak("press Q to skip rest")
+
+            rest_start = time.time()
+            while time.time() - rest_start < rest_duration and not exit_flag:
+                frame = recorder.get_last_frame()
+                if frame is not None:
+                    preview = frame.copy()
+                    cv2.putText(preview, f"Resting: {int(time.time()-rest_start)} s", (20, 40),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 0), 2)
+                    cv2.imshow("Recording Preview", preview)
+                key = cv2.waitKey(100)
+                if key == ord('q'):
+                    rospy.loginfo("⏭️ Rest skipped by user.")
+                    break
+
+        speak("all episodes recorded and saved")
+        rospy.loginfo("🎉 All episodes completed.")
+
     except rospy.ROSInterruptException:
-        pass
-
-
-# import rospy
-# import numpy as np
-# import pickle
-# import os
-# import datetime
-# from sensor_msgs.msg import Image
-# from std_msgs.msg import Float64MultiArray
-# from cv_bridge import CvBridge
-# from threading import Lock
-
-# class Recorder:
-#     def __init__(self):
-#         rospy.init_node('recorder')
-#         self.bridge = CvBridge()
-#         self.lock = Lock()
-
-#         self.latest_image = None
-#         self.latest_state = None
-#         self.latest_action = None
-#         self.episode = []
-
-#         rospy.Subscriber('/cam_1', Image, self.image_callback)
-#         rospy.Subscriber('/robot_state', Float64MultiArray, self.state_callback)
-#         rospy.Subscriber('/robot_action', Float64MultiArray, self.action_callback)
-#         rospy.on_shutdown(self.save_episode)
-#         rospy.loginfo("Recorder initialized and listening...")
-
-#     def image_callback(self, msg):
-#         try:
-#             cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
-#         except Exception as e:
-#             rospy.logerr(f"Failed to convert image: {e}")
-#             return
-
-#         with self.lock:
-#             self.latest_image = cv_image
-#             self.try_record()
-
-#     def state_callback(self, msg):
-#         with self.lock:
-#             self.latest_state = msg.data
-#             self.try_record()
-
-#     def action_callback(self, msg):
-#         with self.lock:
-#             self.latest_action = msg.data
-#             self.try_record()
-
-#     def try_record(self):
-#         if self.latest_image is not None and self.latest_state is not None and self.latest_action is not None:
-#             ts = {
-#                 "image": self.latest_image.copy(),
-#                 "state": np.array(self.latest_state),
-#                 "action": np.array(self.latest_action)
-#             }
-#             self.episode.append(ts)
-#             rospy.loginfo(f"Recorded step {len(self.episode)}")
-#             self.latest_image = None
-#             self.latest_state = None
-#             self.latest_action = None
-
-#     def save_episode(self):
-#         if not self.episode:
-#             rospy.logwarn("No data recorded, skipping save.")
-#             return
-
-#         timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-#         filename = f"lerobot_episode_{timestamp}.pkl"
-#         save_dir = os.path.expanduser("~/ros_save_data")
-#         os.makedirs(save_dir, exist_ok=True)  # 自动创建目录
-#         save_path = os.path.join(save_dir, filename)
-
-#         try:
-#             with open(save_path, 'wb') as f:
-#                 pickle.dump(self.episode, f)
-#             rospy.loginfo(f"Episode saved to {save_path}")
-#         except Exception as e:
-#             rospy.logerr(f"Failed to save episode: {e}")
-
-
-# if __name__ == '__main__':
-#     try:
-#         Recorder()
-#         rospy.spin()
-#     except rospy.ROSInterruptException:
-#         pass
-
+        rospy.loginfo("ROS Interrupt received. Shutdown.")
