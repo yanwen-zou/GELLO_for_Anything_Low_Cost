@@ -233,4 +233,4 @@ if __name__ == '__main__':
         rospy.loginfo("🎉 All episodes completed.")
 
     except rospy.ROSInterruptException:
-        rospy.loginfo("ROS Interrupt received. Shutdown.")
+        rospy.loginfo("ROS Interrupt received.Shutdown.")
