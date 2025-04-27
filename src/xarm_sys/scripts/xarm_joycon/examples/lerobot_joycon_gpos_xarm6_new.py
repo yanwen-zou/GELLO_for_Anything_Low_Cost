@@ -60,9 +60,9 @@ JOINT_LIMITS_RAD = {
     0: (np.deg2rad(-360), np.deg2rad(360)),    # J1
     1: (np.deg2rad(-117), np.deg2rad(116)),    # J2
     2: (np.deg2rad(-219), np.deg2rad(10)),     # J3
-    3: (np.deg2rad(-360), np.deg2rad(360)),    # J4
-    4: (np.deg2rad(-97), np.deg2rad(180)),     # J5
-    5: (np.deg2rad(-360), np.deg2rad(360))     # J6
+    3: (np.deg2rad(100), np.deg2rad(283)),    # J4
+    4: (np.deg2rad(-20), np.deg2rad(180)),     # J5
+    5: (np.deg2rad(-100), np.deg2rad(80))     # J6
 }
 
 def unwrap_and_clamp_angles_rad(curr_joint_angles, target_joint_angles):
@@ -96,9 +96,11 @@ def unwrap_and_clamp_angles_rad(curr_joint_angles, target_joint_angles):
 
 
 init_qpos = np.array([14.1, -8, -24.7, 196.9, 62.3, -8.8])
+# init_qpos = np.array([7, 19.7, -20.2, 182.1, 88.1, -1.7])
 init_qpos = np.radians(init_qpos)
 # print("init_qpos", init_qpos)
 arm.set_servo_angle(angle=init_qpos,speed=8,is_radian=True)
+
 mjdata.qpos[qpos_indices] = init_qpos
 
 target_qpos = init_qpos.copy() 
@@ -122,6 +124,7 @@ control_glimit = [
 joyconrobotics_right = JoyconRobotics(
     device="right", 
     horizontal_stick_mode='yaw_diff', 
+    arm=arm,
     close_y=False, 
     limit_dof=True, 
     glimit=control_glimit,
