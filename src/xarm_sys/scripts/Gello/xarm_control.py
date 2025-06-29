@@ -10,5 +10,5 @@ init_qpos = np.array([14.1, -8, -24.7, 196.9, 62.3, -8.8])
 init_qpos = np.radians(init_qpos)
 
 arm.set_servo_angle(angle=init_qpos,speed=1,is_radian=True)
-arm.set_gripper_position(700)
+arm.set_gripper_position(0)
       # 设置夹持力为 50%，可调

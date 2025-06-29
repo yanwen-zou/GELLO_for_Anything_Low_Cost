@@ -17,7 +17,7 @@ PID2=$!
 echo "[INFO] episode_recorder.py started with PID $PID2"
 
 # === 启动 Joycon 遥操作控制器（使用 python3）===
-python3 /root/xarm_ws/src/xarm_sys/scripts/xarm_joycon/examples/lerobot_joycon_gpos_xarm6_new.py &
+python3 /root/xarm_ws/src/xarm_sys/scripts/Gello/servo2arm.py &
 PID3=$!
 echo "[INFO] lerobot_joycon_gpos_xarm6_new.py started with PID $PID3"
 
