@@ -1,106 +1,81 @@
-import serial
-import time
+#!/usr/bin/env python3
+import rospy
+from std_msgs.msg import Float64MultiArray
 from xarm.wrapper import XArmAPI  
 import numpy as np
+import serial
+import time
 import re
 
-# 初始化机械臂
-arm = XArmAPI('192.168.1.199')
-arm.motion_enable(enable=True) 
-arm.set_gripper_enable(enable=True) 
-arm.set_mode(6)  
-arm.set_state(0)  
+class XArmTeleopNode:
+    def __init__(self):
+        rospy.init_node("xarm_teleop_node")
+        self.pub = rospy.Publisher('/robot_action', Float64MultiArray, queue_size=10)
+        self.rate = rospy.Rate(20)
 
-init_qpos = np.array([14.1, -8, -24.7, 196.9, 62.3, -8.8, 0.0])
-init_qpos = np.radians(init_qpos)
+        self.SERIAL_PORT = rospy.get_param("~serial_port", "/dev/ttyUSB0")
+        self.BAUDRATE = rospy.get_param("~baudrate", 115200)
 
-arm.set_servo_angle(angle=init_qpos, speed=1, is_radian=True)
+        self.init_qpos = np.radians([14.1, -8, -24.7, 196.9, 62.3, -8.8, 0.0])
+        self.arm = XArmAPI('192.168.1.199')
+        self._init_arm()
+        self.arm_qpos = self.init_qpos
 
-# 设置串口参数
-SERIAL_PORT = '/dev/ttyUSB0'
-BAUDRATE = 115200
+        self.ser = serial.Serial(self.SERIAL_PORT, self.BAUDRATE, timeout=0.1)
+        rospy.loginfo("串口已打开")
+        self.gripper_range = 0.48
+        rospy.Subscriber('/servo_angles', Float64MultiArray, self.servo_callback)
 
-def send_command(ser, cmd):
-    ser.write(cmd.encode('ascii'))
-    time.sleep(0.008)
-    response = ser.read_all()
-    return response.decode('ascii', errors='ignore')
+    def _init_arm(self):
+        self.arm.motion_enable(enable=True) 
+        self.arm.set_gripper_enable(enable=True) 
+        self.arm.set_mode(6)  
+        self.arm.set_state(0)  
+        self.arm.set_servo_angle(angle=self.init_qpos, speed=1, is_radian=True)
 
-def pwm_to_angle(response_str, pwm_min=500, pwm_max=2500, angle_range=270):
-    match = re.search(r'P(\d{4})', response_str)
-    if not match:
-        return None
-    pwm_val = int(match.group(1))
-    pwm_span = pwm_max - pwm_min
-    angle = (pwm_val - pwm_min) / pwm_span * angle_range
-    return angle
-
-def angle_to_gripper(angle_deg, angle_range=0.48, pos_min=50, pos_max=730):
-    """
-    将舵机角度（度）映射为 gripper position。
-
-    参数:
-    - angle_deg: 舵机角度，单位度
-    - angle_range: 舵机最大角度（默认270°）
-    - pos_min: gripper闭合位置（默认50）
-    - pos_max: gripper张开位置（默认730）
-
-    返回:
-    - gripper position（整型）
-    """
-    ratio = max(0, 1-(angle_deg / angle_range))
-    position = pos_min + (pos_max - pos_min) * ratio
-    return int(np.clip(position, pos_min, pos_max))
-
-def deg_angle_to_rad_xarm(angle_offset):
-
-    angle_offset[2] = -angle_offset[2]
-    #angle_offset[4] = -angle_offset[4]
-    angle_offset[6] = -angle_offset[6]
-
-    rad_angle = np.radians(angle_offset)
-
-    rad_angle = rad_angle + init_qpos
-
-    return rad_angle
+    def servo_callback(self, msg):
+        angle_offset = list(msg.data)
+        self.arm_qpos = self.deg_angle_to_rad_xarm(angle_offset)
 
 
-def main():
-    with serial.Serial(SERIAL_PORT, BAUDRATE, timeout=0.1) as ser:
-        print("串口已打开")
+    def pwm_to_angle(self, response_str, pwm_min=500, pwm_max=2500, angle_range=270):
+        match = re.search(r'P(\d{4})', response_str)
+        if not match:
+            return None
+        pwm_val = int(match.group(1))
+        pwm_span = pwm_max - pwm_min
+        angle = (pwm_val - pwm_min) / pwm_span * angle_range
+        return angle
 
-        response = send_command(ser, '#000PVER!')
-        print(f"版本号回复: {response.strip()}")
-        zero_angles = [0.0] * 7
-        # 依次释放所有舵机扭力
-        for i in range(7):
-            send_command(ser, "#000PCSK!")
-            cmd = f'#{i:03d}PULK!'
-            response = send_command(ser, cmd)
-            print(f"舵机 {i} 释放扭力: {response.strip()}")
-            cmd = f'#{i:03d}PRAD!'
-            response = send_command(ser, cmd)
-            angle = pwm_to_angle(response.strip())
-            zero_angles[i] = angle
-        
-        arm_qpos = [0.0] * 7
-        angle_offset = [0.0] * 7
-        while True:
-            for i in range(7):  # ID 从 0 到 6
-                
-                cmd = f'#{i:03d}PRAD!'
-                response = send_command(ser, cmd)
-                angle = pwm_to_angle(response.strip())
-                if angle is not None:
-                    angle_offset[i] = angle - zero_angles[i]
-                else:
-                    print(f"舵机 {i} 回传: {response.strip()}")
-            arm_qpos = deg_angle_to_rad_xarm(angle_offset)
-            print(f"arm_pos:{arm_qpos}")
-            gripper_position = angle_to_gripper(arm_qpos[6])
-            arm.set_servo_angle(angle=arm_qpos[:6], speed=0.5, is_radian=True)
-            arm.set_gripper_position(gripper_position)
+    def angle_to_gripper(self, angle_deg, pos_min=50, pos_max=730):
+        ratio = max(0, 1 - (angle_deg / self.gripper_range))
+        position = pos_min + (pos_max - pos_min) * ratio
+        return int(np.clip(position, pos_min, pos_max))
+
+    def deg_angle_to_rad_xarm(self, angle_offset):
+        angle_offset[2] = -angle_offset[2]
+        angle_offset[6] = -angle_offset[6]
+        rad_angle = np.radians(angle_offset) + self.init_qpos
+        return rad_angle
+
+    def run(self):
+        while not rospy.is_shutdown():
+            gripper_position = self.angle_to_gripper(self.arm_qpos[6])
+            self.arm.set_servo_angle(angle=self.arm_qpos[:6], speed=0.5, is_radian=True)
+            self.arm.set_gripper_position(gripper_position)
             
+            arm_qpos_degree = [0.0] * 7
+            arm_qpos_degree[:6] = np.degrees(self.arm_qpos[:6])
+            arm_qpos_degree[6] = self.gripper_range - self.arm_qpos[6]
+
+            msg = Float64MultiArray(data=list(arm_qpos_degree))
+            self.pub.publish(msg)
+            rospy.loginfo(f"Published robot action: {msg.data}")
+            self.rate.sleep()
 
 if __name__ == "__main__":
-    main()
+    try:
+        node = XArmTeleopNode()
+        node.run()
+    except rospy.ROSInterruptException:
+        pass

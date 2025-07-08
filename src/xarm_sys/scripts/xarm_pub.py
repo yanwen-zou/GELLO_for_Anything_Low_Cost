@@ -10,17 +10,17 @@ class ArmInterfaceNode:
         rospy.loginfo("Connecting to xArm...")
 
         # initialize xArm
-        robot_ip = rospy.get_param("~robot_ip", "192.168.1.222")  
+        robot_ip = rospy.get_param("~robot_ip", "192.168.1.199")  
         self.arm = XArmAPI(robot_ip)
         self.arm.motion_enable(True)
-        self.arm.set_mode(1)  
+        self.arm.set_mode(6)  
         self.arm.set_state(0)  
 
         rospy.loginfo("xArm connected.")
 
         # Initialize ROS publishers
         self.state_pub = rospy.Publisher('/robot_state', Float64MultiArray, queue_size=10)
-        rospy.Timer(rospy.Duration(0.1), self.publish_state)
+        rospy.Timer(rospy.Duration(0.1), self.publish_state) # to 20hz
 
     def publish_state(self, event):
         joint_angles = self.arm.get_servo_angle()

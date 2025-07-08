@@ -67,7 +67,7 @@ class Recorder:
 
         timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         filename = f"lerobot_episode_{timestamp}.pkl"
-        save_dir = "/root/xarm_ws/save_data"
+        save_dir = "/home/zhaobo/code/teleop/save_data"
         os.makedirs(save_dir, exist_ok=True)  # 自动创建目录
         save_path = os.path.join(save_dir, filename)
 

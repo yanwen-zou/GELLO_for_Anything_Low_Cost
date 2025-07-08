@@ -1,4 +1,4 @@
-prefix=/root/xarm_ws/install
+prefix=/home/zhaobo/code/teleop/install
 
 Name: xarm_sys
 Description: Description of xarm_sys

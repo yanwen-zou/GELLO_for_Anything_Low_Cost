@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /root/xarm_ws/src
+CMAKE_SOURCE_DIR = /home/zhaobo/code/teleop/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /root/xarm_ws/build
+CMAKE_BINARY_DIR = /home/zhaobo/code/teleop/build
 
 # Utility rule file for std_msgs_generate_messages_py.
 
@@ -63,10 +63,10 @@ xarm_sys/CMakeFiles/std_msgs_generate_messages_py.dir/build: std_msgs_generate_m
 .PHONY : xarm_sys/CMakeFiles/std_msgs_generate_messages_py.dir/build
 
 xarm_sys/CMakeFiles/std_msgs_generate_messages_py.dir/clean:
-	cd /root/xarm_ws/build/xarm_sys && $(CMAKE_COMMAND) -P CMakeFiles/std_msgs_generate_messages_py.dir/cmake_clean.cmake
+	cd /home/zhaobo/code/teleop/build/xarm_sys && $(CMAKE_COMMAND) -P CMakeFiles/std_msgs_generate_messages_py.dir/cmake_clean.cmake
 .PHONY : xarm_sys/CMakeFiles/std_msgs_generate_messages_py.dir/clean
 
 xarm_sys/CMakeFiles/std_msgs_generate_messages_py.dir/depend:
-	cd /root/xarm_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/xarm_ws/src /root/xarm_ws/src/xarm_sys /root/xarm_ws/build /root/xarm_ws/build/xarm_sys /root/xarm_ws/build/xarm_sys/CMakeFiles/std_msgs_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/zhaobo/code/teleop/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/zhaobo/code/teleop/src /home/zhaobo/code/teleop/src/xarm_sys /home/zhaobo/code/teleop/build /home/zhaobo/code/teleop/build/xarm_sys /home/zhaobo/code/teleop/build/xarm_sys/CMakeFiles/std_msgs_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : xarm_sys/CMakeFiles/std_msgs_generate_messages_py.dir/depend
 

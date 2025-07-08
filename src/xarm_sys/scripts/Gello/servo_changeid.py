@@ -6,7 +6,7 @@ BAUD_RATE = 115200
 
 with serial.Serial(SERIAL_PORT, BAUD_RATE, timeout=0.5) as ser:
     # 修改 ID：将原 ID=000 改为 002
-    cmd = b'#000PID002!\r\n'
+    cmd = b'#000PID006!\r\n'
     ser.write(cmd)
     print(f"已发送修改ID命令：{cmd.decode().strip()}")
     time.sleep(0.5)

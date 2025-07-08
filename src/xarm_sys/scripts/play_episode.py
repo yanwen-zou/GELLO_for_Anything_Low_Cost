@@ -31,7 +31,3 @@ for i, step in enumerate(episode):
         break
 
 cv2.destroyAllWindows()
-# import pickle
-# with open("/home/bozhao/code/xarm_ws/Xarm_ros_deploy/save_data/lerobot_episode_20250407_084617.pkl", "rb") as f:
-#     data = pickle.load(f)
-# print(len(data))

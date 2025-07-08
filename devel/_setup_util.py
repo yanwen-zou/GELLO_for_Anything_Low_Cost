@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/home/zhaobo/miniconda3/envs/xarm/bin/python3
 # -*- coding: utf-8 -*-
 
 # Software License Agreement (BSD License)

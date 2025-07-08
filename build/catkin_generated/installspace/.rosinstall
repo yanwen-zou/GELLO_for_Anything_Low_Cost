@@ -1,2 +1,2 @@
 - setup-file:
-    local-name: /root/xarm_ws/install/setup.sh
+    local-name: /home/zhaobo/code/teleop/install/setup.sh
