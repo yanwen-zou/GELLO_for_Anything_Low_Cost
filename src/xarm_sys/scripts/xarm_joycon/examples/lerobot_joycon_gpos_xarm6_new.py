@@ -95,7 +95,8 @@ def unwrap_and_clamp_angles_rad(curr_joint_angles, target_joint_angles):
 
 
 
-init_qpos = np.array([14.1, -8, -24.7, 196.9, 62.3, -8.8])
+# init_qpos = np.array([14.1, -8, -24.7, 196.9, 62.3, -8.8])
+init_qpos = np.array([4.3, 15.5, -9.4, 182.6, 100.4 ,0.3])
 # init_qpos = np.array([7, 19.7, -20.2, 182.1, 88.1, -1.7])
 init_qpos = np.radians(init_qpos)
 # print("init_qpos", init_qpos)

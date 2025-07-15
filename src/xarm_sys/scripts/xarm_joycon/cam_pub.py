@@ -10,16 +10,16 @@ class DualCameraNode:
         self.bridge = CvBridge()
 
         # 摄像头设备路径
-        self.cam0 = cv2.VideoCapture(0)
-        self.cam6 = cv2.VideoCapture(6)
+        self.cam0 = cv2.VideoCapture(4, cv2.CAP_V4L2)
+        self.cam6 = cv2.VideoCapture(10, cv2.CAP_V4L2)
 
-        # 设置分辨率（可选）
-        self.cam6.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-        self.cam6.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+        # # 设置分辨率（可选）
+        # self.cam6.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+        # self.cam6.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
         if not self.cam0.isOpened():
-            rospy.logerr("❌ Failed to open /dev/video0")
-            raise RuntimeError("Cannot open /dev/video0")
+            rospy.logerr("❌ Failed to open /dev/video1")
+            raise RuntimeError("Cannot open /dev/video1")
         if not self.cam6.isOpened():
             rospy.logerr("❌ Failed to open /dev/video6")
             raise RuntimeError("Cannot open /dev/video6")
@@ -34,13 +34,13 @@ class DualCameraNode:
     def publish_images(self, event):
         ret0, frame0 = self.cam0.read()
         ret6, frame6 = self.cam6.read()
-
+        # print(frame6.shape)
         if ret0:
             ros_img0 = self.bridge.cv2_to_imgmsg(frame0, encoding='bgr8')
             self.pub_cam1.publish(ros_img0)
             # rospy.loginfo("Published real image from camera0")
         else:
-            rospy.logwarn("⚠️ Failed to capture image from /dev/video0")
+            rospy.logwarn("⚠️ Failed to capture image from /dev/video1")
 
         if ret6:
             ros_img6 = self.bridge.cv2_to_imgmsg(frame6, encoding='bgr8')

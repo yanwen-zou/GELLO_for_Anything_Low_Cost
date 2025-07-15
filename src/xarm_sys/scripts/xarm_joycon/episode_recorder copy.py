@@ -25,15 +25,6 @@ arm = XArmAPI('192.168.1.222')
 
 exit_flag = False
 
-def center_crop_and_resize(image, crop_h, crop_w, out_h=448, out_w=448):
-    h, w = image.shape[:2]
-    start_y = max((h - crop_h) // 2, 0)
-    start_x = max((w - crop_w) // 2, 0)
-    cropped = image[start_y:start_y+crop_h, start_x:start_x+crop_w]
-    resized = cv2.resize(cropped, (out_w, out_h))
-    return resized
-
-
 def handle_shutdown(signum, frame):
     global exit_flag
     exit_flag = True
@@ -80,26 +71,23 @@ class Recorder:
     def image1_callback(self, msg):
         try:
             cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
-            # print(cv_image.size)
-            cropped_resized = center_crop_and_resize(cv_image, crop_h=720, crop_w=720)  # you can adjust this
         except Exception as e:
             rospy.logerr(f"Failed to convert cam_1 image: {e}")
             return
         with self.lock:
-            self.latest_image_1 = cropped_resized
-            self.preview_image_1 = cropped_resized.copy()
+            self.latest_image_1 = cv_image
+            self.preview_image_1 = cv_image.copy()
             self.try_record()
 
     def image2_callback(self, msg):
         try:
             cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
-            cropped_resized = center_crop_and_resize(cv_image, crop_h=720, crop_w=720)
         except Exception as e:
             rospy.logerr(f"Failed to convert cam_2 image: {e}")
             return
         with self.lock:
-            self.latest_image_2 = cropped_resized
-            self.preview_image_2 = cropped_resized.copy()
+            self.latest_image_2 = cv_image
+            self.preview_image_2 = cv_image.copy()
             self.try_record()
 
     def state_callback(self, msg):
@@ -143,7 +131,7 @@ class Recorder:
             rospy.logwarn("No data recorded, skipping save.")
             return
 
-        save_dir = os.path.expanduser("~/ros_save_data/separate_coke_and_aprite_0715")
+        save_dir = os.path.expanduser("~/ros_save_data/lh_705_pick_coke")
         os.makedirs(save_dir, exist_ok=True)
 
         tfrecord_path = os.path.join(save_dir, f"lerobot_episode_{episode_id}")
@@ -204,10 +192,10 @@ if __name__ == '__main__':
         recorder = Recorder()
 
         num_episodes = 100
-        record_duration = 90
+        record_duration = 60
         rest_duration = 30
         continue_recording = True
-        save_dir = os.path.expanduser("~/ros_save_data/separate_coke_and_aprite_0715")
+        save_dir = os.path.expanduser("~/ros_save_data/lh_705_pick_coke")
         os.makedirs(save_dir, exist_ok=True)
 
         start_id = get_next_episode_id(save_dir) if continue_recording else 1
