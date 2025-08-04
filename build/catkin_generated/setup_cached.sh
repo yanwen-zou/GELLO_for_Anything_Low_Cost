@@ -7,8 +7,5 @@
 # new environment variables
 
 # modified environment variables
-export CMAKE_PREFIX_PATH="/home/bozhao_4060_2/ros_ws/devel:$CMAKE_PREFIX_PATH"
-export PATH='/opt/ros/noetic/bin:/home/bozhao_4060_2/anaconda3/condabin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'
-export PWD='/home/bozhao_4060_2/ros_ws/build'
-export ROSLISP_PACKAGE_DIRECTORIES='/home/bozhao_4060_2/ros_ws/devel/share/common-lisp'
-export ROS_PACKAGE_PATH="/home/bozhao_4060_2/ros_ws/src:$ROS_PACKAGE_PATH"
+export PWD='/home/zhaobo/code/teleop2/ros_joycon_rlds/build'
+export ROS_PACKAGE_PATH='/home/bozhao_4060_2/ros_ws/src:/home/zhaobo/code/teleop2/ros_joycon_rlds/src:/opt/ros/noetic/share'

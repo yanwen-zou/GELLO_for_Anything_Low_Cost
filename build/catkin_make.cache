@@ -1,2 +1,2 @@
 xarm_sys
--DCATKIN_DEVEL_PREFIX=/home/bozhao_4060_2/ros_ws/devel -DCMAKE_INSTALL_PREFIX=/home/bozhao_4060_2/ros_ws/install -G Unix Makefiles
+-DCATKIN_DEVEL_PREFIX=/home/zhaobo/code/teleop2/ros_joycon_rlds/devel -DCMAKE_INSTALL_PREFIX=/home/zhaobo/code/teleop2/ros_joycon_rlds/install -G Unix Makefiles

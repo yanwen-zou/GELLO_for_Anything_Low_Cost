@@ -11,7 +11,7 @@
 
 # since this file is sourced either use the provided _CATKIN_SETUP_DIR
 # or fall back to the destination set at configure time
-: ${_CATKIN_SETUP_DIR:=/home/bozhao_4060_2/ros_ws/devel}
+: ${_CATKIN_SETUP_DIR:=/home/zhaobo/code/teleop2/ros_joycon_rlds/devel}
 _SETUP_UTIL="$_CATKIN_SETUP_DIR/_setup_util.py"
 unset _CATKIN_SETUP_DIR
 
@@ -62,7 +62,7 @@ CATKIN_SHELL=$CATKIN_SHELL "$_SETUP_UTIL" $@ ${CATKIN_SETUP_UTIL_ARGS:-} >> "$_S
 _RC=$?
 if [ $_RC -ne 0 ]; then
   if [ $_RC -eq 2 ]; then
-    echo "Could not write the output of '$_SETUP_UTIL' to temporary file '$_SETUP_TMP': may be the disk if full?"
+    echo "Could not write the output of '$_SETUP_UTIL' to temporary file '$_SETUP_TMP': maybe the disk is full?"
   else
     echo "Failed to run '\"$_SETUP_UTIL\" $@': return code $_RC"
   fi

@@ -1,4 +1,4 @@
-prefix=/home/bozhao_4060_2/ros_ws/install
+prefix=/home/zhaobo/code/teleop2/ros_joycon_rlds/install
 
 Name: xarm_sys
 Description: Description of xarm_sys

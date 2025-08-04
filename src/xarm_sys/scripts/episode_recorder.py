@@ -13,15 +13,11 @@ import signal
 import sys
 
 import tensorflow as tf
-import rlds
 import cv2
 import pyttsx3
 from num2words import num2words
 import re
 import subprocess
-
-from xarm.wrapper import XArmAPI
-arm = XArmAPI('192.168.1.222')
 
 exit_flag = False
 
@@ -143,7 +139,7 @@ class Recorder:
             rospy.logwarn("No data recorded, skipping save.")
             return
 
-        save_dir = os.path.expanduser("~/ros_save_data/separate_coke_and_aprite_0715")
+        save_dir = os.path.expanduser("~/ros_save_data/put_stick_into_hole0731")
         os.makedirs(save_dir, exist_ok=True)
 
         tfrecord_path = os.path.join(save_dir, f"lerobot_episode_{episode_id}")
@@ -203,87 +199,39 @@ if __name__ == '__main__':
         rospy.init_node('recorder')
         recorder = Recorder()
 
-        num_episodes = 100
-        record_duration = 90
-        rest_duration = 30
-        continue_recording = True
-        save_dir = os.path.expanduser("~/ros_save_data/separate_coke_and_aprite_0715")
+        save_dir = os.path.expanduser("~/ros_save_data/put_stick_into_hole0731")
         os.makedirs(save_dir, exist_ok=True)
-
-        start_id = get_next_episode_id(save_dir) if continue_recording else 1
-        # init_qpos = np.radians([14.1, -8, -24.7, 196.9, 62.3, -8.8])
+        episode_id = get_next_episode_id(save_dir)
 
         cv2.namedWindow("Preview: cam_1", cv2.WINDOW_NORMAL)
         cv2.namedWindow("Preview: cam_2", cv2.WINDOW_NORMAL)
         cv2.resizeWindow("Preview: cam_1", 640, 360)
         cv2.resizeWindow("Preview: cam_2", 640, 360)
 
-        for episode_id in range(start_id, start_id + num_episodes):
-            if exit_flag:
-                break
+        start_time = time.time()
 
-            msg = f"recording episode {episode_id}"
-            rospy.loginfo(f"🔴 {msg}, duration {record_duration}s...")
-            speak(msg)
+        rospy.loginfo(f"🔴 Recording episode {episode_id}. Press Ctrl+C to stop and save.")
+        recorder.recording = True
 
-            recorder.recording = True
-            start_time = time.time()
-            while time.time() - start_time < record_duration and not rospy.is_shutdown() and not exit_flag:
-                frame1, frame2 = recorder.get_last_frames()
-                if frame1 is not None:
-                    cv2.putText(frame1, f"Recording: {int(time.time()-start_time)} s", (20, 40),
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
-                    cv2.imshow("Preview: cam_1", frame1)
-                if frame2 is not None:
-                    cv2.putText(frame2, f"Recording: {int(time.time()-start_time)} s", (20, 40),
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
-                    cv2.imshow("Preview: cam_2", frame2)
-                key = cv2.waitKey(10)
-                if key == ord('q'):
-                    rospy.loginfo("⏹️ Recording interrupted by user.")
-                    break
+        while not rospy.is_shutdown() and not exit_flag:
+            frame1, frame2 = recorder.get_last_frames()
+            if frame1 is not None:
+                cv2.putText(frame1, "Recording...", (20, 40),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
+                cv2.imshow("Preview: cam_1", frame1)
+            if frame2 is not None:
+                cv2.putText(frame2, "Recording...", (20, 40),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
+                cv2.imshow("Preview: cam_2", frame2)
+            cv2.waitKey(10)
 
-            recorder.recording = False
-
-            if exit_flag:
-                break
-
-            
-
-
-            speak(f"recording completed, saving episode {episode_id}")
-
-            # init_qpos = np.array([14.1, -8, -24.7, 196.9, 62.3, -8.8])
-            # init_qpos = np.radians(init_qpos)
-            # arm.set_servo_angle(angle=init_qpos,speed=8,is_radian=True)
-
-            recorder.save_episode(episode_id)
-
-            rospy.loginfo(f"✅ Episode {episode_id} saved. Resting for {rest_duration}s...\n")
-            speak(f"rest for {rest_duration} seconds")
-            speak("press Q to skip rest")
-
-            rest_start = time.time()
-            while time.time() - rest_start < rest_duration and not exit_flag:
-                frame1, frame2 = recorder.get_last_frames()
-                if frame1 is not None:
-                    cv2.putText(frame1, f"Resting: {int(time.time()-rest_start)} s", (20, 40),
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 0), 2)
-                    cv2.imshow("Preview: cam_1", frame1)
-                if frame2 is not None:
-                    cv2.putText(frame2, f"Resting: {int(time.time()-rest_start)} s", (20, 40),
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 0), 2)
-                    cv2.imshow("Preview: cam_2", frame2)
-                key = cv2.waitKey(100)
-                if key == ord('q'):
-                    rospy.loginfo("⏭️ Rest skipped by user.")
-                    break
-
-        speak("all episodes recorded and saved")
-
-        rospy.loginfo("🎉 All episodes completed.")
+        recorder.recording = False
+        rospy.loginfo("⏹️ Stopped recording. Saving episode...")
+        recorder.save_episode(episode_id)
+        # ✅ 录制后打印花费时间
+        duration = time.time() - start_time
+        rospy.loginfo(f"🕒 Episode {episode_id} recorded in {duration:.2f} seconds.")
+        rospy.loginfo("✅ Episode saved. Exiting.")
 
     except rospy.ROSInterruptException:
-        rospy.loginfo("ROS Interrupt received.Shutdown.")
-
-
+        rospy.loginfo("ROS Interrupt received. Shutdown.")

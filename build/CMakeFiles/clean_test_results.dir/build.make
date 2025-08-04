@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/bozhao_4060_2/ros_ws/src
+CMAKE_SOURCE_DIR = /home/zhaobo/code/teleop2/ros_joycon_rlds/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/bozhao_4060_2/ros_ws/build
+CMAKE_BINARY_DIR = /home/zhaobo/code/teleop2/ros_joycon_rlds/build
 
 # Utility rule file for clean_test_results.
 
@@ -54,7 +54,7 @@ CMAKE_BINARY_DIR = /home/bozhao_4060_2/ros_ws/build
 include CMakeFiles/clean_test_results.dir/progress.make
 
 CMakeFiles/clean_test_results:
-	/usr/bin/python3 /opt/ros/noetic/share/catkin/cmake/test/remove_test_results.py /home/bozhao_4060_2/ros_ws/build/test_results
+	/home/zhaobo/miniconda3/bin/python3 /opt/ros/noetic/share/catkin/cmake/test/remove_test_results.py /home/zhaobo/code/teleop2/ros_joycon_rlds/build/test_results
 
 clean_test_results: CMakeFiles/clean_test_results
 clean_test_results: CMakeFiles/clean_test_results.dir/build.make
@@ -71,6 +71,6 @@ CMakeFiles/clean_test_results.dir/clean:
 .PHONY : CMakeFiles/clean_test_results.dir/clean
 
 CMakeFiles/clean_test_results.dir/depend:
-	cd /home/bozhao_4060_2/ros_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/bozhao_4060_2/ros_ws/src /home/bozhao_4060_2/ros_ws/src /home/bozhao_4060_2/ros_ws/build /home/bozhao_4060_2/ros_ws/build /home/bozhao_4060_2/ros_ws/build/CMakeFiles/clean_test_results.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/zhaobo/code/teleop2/ros_joycon_rlds/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/zhaobo/code/teleop2/ros_joycon_rlds/src /home/zhaobo/code/teleop2/ros_joycon_rlds/src /home/zhaobo/code/teleop2/ros_joycon_rlds/build /home/zhaobo/code/teleop2/ros_joycon_rlds/build /home/zhaobo/code/teleop2/ros_joycon_rlds/build/CMakeFiles/clean_test_results.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/clean_test_results.dir/depend
 
