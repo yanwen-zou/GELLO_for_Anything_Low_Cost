@@ -1,8 +1,0 @@
-prefix=/home/zhaobo/code/teleop2/ros_joycon_rlds/devel
-
-Name: xarm_sys
-Description: Description of xarm_sys
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

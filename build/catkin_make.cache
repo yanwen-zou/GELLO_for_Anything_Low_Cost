@@ -1,2 +1,0 @@
-xarm_sys
--DCATKIN_DEVEL_PREFIX=/home/zhaobo/code/teleop2/ros_joycon_rlds/devel -DCMAKE_INSTALL_PREFIX=/home/zhaobo/code/teleop2/ros_joycon_rlds/install -G Unix Makefiles
