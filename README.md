@@ -2,9 +2,9 @@
 
 
 <p align="center">
-  <img src="pics/xarm.gif" width="30%" />
-  <img src="pics/dobot.gif" width="30%" />
-  <img src="pics/arx.gif" width="30%" />
+  <img src="pics/Xarm.gif" width="30%" />
+  <img src="pics/Dobot.gif" width="30%" />
+  <img src="pics/Arx.gif" width="30%" />
 </p>
 
 ## Overview
