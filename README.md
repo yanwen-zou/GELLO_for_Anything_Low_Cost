@@ -1,4 +1,5 @@
-# GELLO for Anything Low Cost
+# UArm: Ultra Low-Cost General Interface for Robot Manipulation 
+
 
 
 <p align="center">
