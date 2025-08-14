@@ -13,9 +13,9 @@ This repository hosts a low-cost hardware teleoperation system capable of contro
 It targets **Ubuntu 20.04 with ROS Noetic** and will soon support teleoperation experiments inside the **SAPIEN** simulation environment *(coming soon)*.
 
 ## Features
-- **Three teleop hardware configs** to fit different form factors and budgets
-- **ROS-based**: teleop arm publishes servo angles to `/servo_angles`
-- **Follower-arm examples** for Dobot and xArm
+- **Three teleop hardware configs** to cover **almost all commercial robot arms**
+- **ROS1-based**: teleop arm publishes servo angles to `/servo_angles`
+- **Follower-arm examples** for Dobot, xArm. We also provide ARX5 control example with ROS-free version.
 - **SAPIEN simulation integration** on the roadmap *(coming soon)*
 
 ---
@@ -42,6 +42,8 @@ Detailed build instructions (parts list, wiring, mechanical assembly) will be av
 ---
 
 ## Quick Start
+
+When the hardware is ready, you can run the following code to test UArm:
 
 ### 1. Verify teleop arm output
 ```bash
