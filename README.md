@@ -1,9 +1,10 @@
 # GELLO for Anything Low Cost
 
+
 <p align="center">
-  <img src="https://drive.google.com/uc?export=view&id=17b6ayigQQS0gNm5r6YZi-RezE-FZiyVT" alt="xArm Teleop" width="30%"/>
-  <img src="https://drive.google.com/uc?export=view&id=1Lyoza1BqSqveD8dn41_JLwBvUbT2TbAA" alt="Dobot Teleop" width="30%"/>
-  <img src="https://drive.google.com/uc?export=view&id=1Cz_ZdehFoAi3lnY-eTfKbWGRFAQslu8K" alt="ARX Teleop" width="30%"/>
+  <img src="pics/xarm.gif" width="30%" />
+  <img src="pics/dobot.gif" width="30%" />
+  <img src="pics/arx.gif" width="30%" />
 </p>
 
 ## Overview
