@@ -85,9 +85,10 @@ rosrun uarm scripts/Follower_Arm/xarm/servo2xarm.py
 ## Supported Teleop Configurations
 | Teleop Config | Compatible Robot Arms |
 |---------------|-----------------------|
-| Config A      |                       |
-| Config B      |                       |
-| Config C      |                       |
+| Config 1      | Xarm7, Fanuc LR Mate 200iD, Trossen ALOHA, Agile PiPER, Realman RM65B, KUKA LBR iiSY Cobot |
+| Config 2      | Dobot CR5, UR5, ARX R5*, AUBO i5, JAKA Zu7 |
+| Config 3      | Franka FR3, Franka Emika Panda, Flexiv Rizon, Realman RM75B |
+
 
 *(Fill the table with your own mappings of teleop configurations to supported arm brands.)*
 
