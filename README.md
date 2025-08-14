@@ -2,7 +2,7 @@
 
 <p align="center">
   <img src="https://drive.google.com/uc?export=view&id=17b6ayigQQS0gNm5r6YZi-RezE-FZiyVT" alt="xArm Teleop" width="30%"/>
-  <img src="https://drive.google.com/uc?export=view&id=1TstFrtobEECeBp54hMWM_Nz0cljpxKOx" alt="Dobot Teleop" width="30%"/>
+  <img src="https://drive.google.com/uc?export=view&id=1Lyoza1BqSqveD8dn41_JLwBvUbT2TbAA" alt="Dobot Teleop" width="30%"/>
   <img src="https://drive.google.com/uc?export=view&id=1Cz_ZdehFoAi3lnY-eTfKbWGRFAQslu8K" alt="ARX Teleop" width="30%"/>
 </p>
 
