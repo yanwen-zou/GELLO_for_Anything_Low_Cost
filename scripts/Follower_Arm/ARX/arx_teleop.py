@@ -12,7 +12,7 @@ import sys
 # ====== ARX5 接口路径配置 ======
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(ROOT_DIR))
-import arx5_interface as arx5  # noqa
+import arx5_interface as arx5  # You should install arx5 api first, following https://github.com/real-stanford/arx5-sdk/tree/main/python/examples
 
 
 # ====== 主臂串口读取类 ======

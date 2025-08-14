@@ -2,18 +2,22 @@
 
 # === 设置 ROS 环境 ===
 source /opt/ros/noetic/setup.bash
-source /home/zhaobo/code/teleop/devel/setup.bash
+
+# 脚本所在的目录
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+source "$SCRIPT_DIR/../devel/setup.bash"
 
 echo "[INFO] ROS 环境已加载，开始启动节点..."
 
 
 # === 启动 servo_reader.py ===
-python3 /home/zhaobo/code/teleop/src/xarm_sys/scripts/Gello/servo_reader.py &
+rosrun UArm servo_reader.py &
 PID1=$!
 echo "[INFO] servo_reader.py started with PID $PID1"
 
-# === 启动 Joycon 遥操作控制器（使用 python3）===
-python3 /home/zhaobo/code/teleop/src/xarm_sys/scripts/Gello/servo2arm.py &
+# === 启动遥操作控制器 ===
+rosrun UArm servo2arm.py &
 PID2=$!
 echo "[INFO] servo2arm.py started with PID $PID2"
 
