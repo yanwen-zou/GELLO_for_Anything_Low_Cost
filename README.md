@@ -108,9 +108,9 @@ LeRobot Everything is a **low-cost, universal, leader-follower teleoperation sys
 > [!NOTE] 
 > If you are totally new to programming, please spend at least a day to get yourself familiar with basic Python, Ubuntu and GitHub (with the help of Google and AI). At least you should know how to set up Ubuntu system, git clone, pip install, use interpreters (VS Code, Cursor, PyCharm, etc.) and directly run commands in the terminals.
 
-1. 💵 **Buy your parts**: [Bill of Materials]()
-2. 🖨️ **Print your stuff**: [3D printing]()
-3. 🔨 [**Assemble**!]()
+1. 💵 **Buy your parts**: [Bill of Materials](https://docs.google.com/document/d/1TjhJOeJXsD5kmoYF-kuWfPju6WSUeSnivJiU7TH4vWs/edit?tab=t.0#heading=h.k991lzlarfb8)
+2. 🖨️ **Print your stuff**: [3D printing](https://github.com/yanwen-zou/UArm-Cross-Embodiment-Teleoperation/tree/main/mechanical)
+3. 🔨 [**Assemble**!](Coming Soon)()
 4. 💻 **Software**: [Get your robot moving!](https://github.com/yanwen-zou/UArm-Cross-Embodiment-Teleoperation/blob/main/howtoplay.md)
 
 
