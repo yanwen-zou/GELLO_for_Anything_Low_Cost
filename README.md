@@ -1,108 +1,181 @@
-# UArm: Ultra Low-Cost General Interface for Robot Manipulation 
+# 🤖 Lerobot Everything
+
+[![en](https://img.shields.io/badge/lang-en-blue.svg)](README.md)
+[![中文](https://img.shields.io/badge/lang-中文-brown.svg)](README_CN.md)
+[![ROS Noetic](https://img.shields.io/badge/ROS-Noetic-brightgreen.svg)](https://www.ros.org/)
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
+[![Ubuntu](https://img.shields.io/badge/Ubuntu-20.04-orange.svg)](https://ubuntu.com/)
+[![Apache License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 
 
 <p align="center">
-  <img src="pics/Xarm.gif" width="30%" />
-  <img src="pics/Dobot.gif" width="30%" />
-  <img src="pics/Arx.gif" width="30%" />
+  <img src="pics/Xarm.gif" width="30%" alt="xArm Demo" />
+  <img src="pics/Dobot.gif" width="30%" alt="Dobot Demo" />
+  <img src="pics/Arx.gif" width="30%" alt="ARX Demo" />
 </p>
+---
 
-## Overview
-This repository hosts a low-cost hardware teleoperation system capable of controlling most commercial robotic arms through three interchangeable hardware configurations.  
-It targets **Ubuntu 20.04 with ROS Noetic** and will soon support teleoperation experiments inside the **SAPIEN** simulation environment *(coming soon)*.
 
-## Features
-- **Three teleop hardware configs** to cover **almost all commercial robot arms**
-- **ROS1-based**: teleop arm publishes servo angles to `/servo_angles`
-- **Follower-arm examples** for Dobot, xArm. We also provide ARX5 control example with ROS-free version.
-- **SAPIEN simulation integration** on the roadmap *(coming soon)*
+>**🚀 Bringing Leader-Follower teleoperation system to every real robot and robot arm -- Cheaper, Smoother, Plug-and-Play**  
+**💵 Starts from $60 cost and ⏰ <1hrs total assembly time!! Then controls any robot arm system!!**
+
+*Built upon the giants: [LeRobot](https://github.com/huggingface/lerobot), [SO-100/SO-101](https://github.com/TheRobotStudio/SO-ARM100), [XLeRobot](https://github.com/Vector-Wangel/XLeRobot#)*
+
+
+
+# 📰 News 
+
+
+- 2025-08-15: **LeRobot Everything 0.1.0** hardware setup, the 1st version fully capable for three major robot arm configurations in ROS2, starts from 60$. 
 
 ---
 
-## Installation
+## 📋 Table of Contents
 
-### 1. Install Python dependencies
-```bash
-pip install -r requirements.txt
-```
-
-### 2. Build the catkin workspace
-```bash
-catkin_make
-source devel/setup.bash
-```
+- [Overview](#-overview)
+- [✨ Features](#-features)
+- [💵 Total Cost](#-total-cost-)
+- [🤖 Supported Robots](#-supported-robots)
+- [🚀 Quick Start](#-quick-start)
+- [🔮 Roadmap](#-roadmap)
+- [🤝 Contributing](#-contributing)
 
 ---
 
-## Hardware Assembly
-Detailed build instructions (parts list, wiring, mechanical assembly) will be available soon:  
-[Google Drive link – coming soon]
+## 🎯 Overview
+
+LeRobot Everything is a **low-cost, universal, leader-follower teleoperation system** for any commercial robot arms and humanoid robots through four interchangeable hardware configurations. Designed for researchers, educators, and robotics enthusiasts, it provides a standardized interface for diverse robot platforms. This project focus on extending the Lerobot to control any real robot in both real scene and simulation.
+
+### 🎯 Target Environment (Docker coming soon)
+- **OS**: Ubuntu 20.04
+- **ROS**: Noetic
+- **Simulation**: SAPIEN integration (coming soon)
 
 ---
 
-## Quick Start
+## ✨ Features
 
-When the hardware is ready, you can run the following code to test UArm:
+| Feature | Description |
+|---------|-------------|
+| 🔄 **Universal Compatibility** | Four teleop configurations covering **most (95%) commercial robot arms** |
+| 📡 **ROS Integration** | Native ROS1 support with `/servo_angles` topic publishing |
+| 🎮 **Real-time Control** | Low-latency servo angle transmission |
+| 🔌 **Plug & Play** | Easy follower-arm integration with provided examples |
+| 🛠️ **Extensible** | Simple API for adding new robot support |
+| 💰 **Cost-effective** | Ultra low-cost hardware solution |
+| 🎯 **Optimized Hardware** | Move smoothly and flexibly |
 
-### 1. Verify teleop arm output
-```bash
-roscore             # in a new terminal
-rosrun uarm servo_zero.py
-```
-This prints real-time angles from all servos.
+### 🎮 Ready-to-Use Examples
 
----
+**Real Robot Examples:**
+- **Dobot CR5** - Complete teleoperation setup
+- **xArm Series** - Full ROS integration  
+- **ARX5** - ROS-free control example
 
-### 2. Publish teleop arm data
-```bash
-rosrun uarm servo_reader.py
-```
-The teleop arm now acts as a **ROS publisher** on the `/servo_angles` topic.
-
----
-
-### 3. Control your follower arm
-1. Wrap your robotic arm in a ROS node that subscribes to `/servo_angles`
-2. Convert incoming angles to your arm’s joint commands
+**Simulation Examples:**
+- Coming soon
 
 ---
 
-### 4. Example followers
+## 💵 Total Cost 💵
 
-**Dobot**
-```bash
-rosrun uarm scripts/Follower_Arm/Dobot/servo2Dobot.py
-```
+> [!NOTE] 
+> Cost excludes 3D printing, tools, shipping, and taxes.
 
-**xArm**
-```bash
-rosrun uarm scripts/Follower_Arm/xarm/servo2xarm.py
-```
+| Price | US | EU | CN |
+| --- | --- | --- | --- |
+| **Basic** (use your laptop) | **~$60** | **~€60** | **~¥499** |
+| ↑ Servos | +$60 | +€60 | +¥499 |
 
 ---
 
-## Supported Teleop Configurations
-| Teleop Config | Compatible Robot Arms |
-|---------------|-----------------------|
-| Config 1      | Xarm7, Fanuc LR Mate 200iD, Trossen ALOHA, Agile PiPER, Realman RM65B, KUKA LBR iiSY Cobot |
-| Config 2      | Dobot CR5, UR5, ARX R5*, AUBO i5, JAKA Zu7 |
-| Config 3      | Franka FR3, Franka Emika Panda, Flexiv Rizon, Realman RM75B |
+## 🤖 Supported Robots (find your robot in the list!)
+
+| Configuration | Compatible Robot Arms | Status |
+|---------------|----------------------|---------|
+| **Config 1** | Xarm7, Fanuc LR Mate 200iD, Trossen ALOHA, Agile PiPER, Realman RM65B, KUKA LBR iiSY Cobot | ✅ Ready |
+| **Config 2** | Dobot CR5, UR5, ARX R5*, AUBO i5, JAKA Zu7 | ✅ Ready |
+| **Config 3** | Franka FR3, Franka Emika Panda, Flexiv Rizon, Realman RM75B | ✅ Ready |
+
+> 💡 **Need support for a different robot?** Check our [Contributing](#-contributing) section!
+
+---
+## 🚀 Quick Start
 
 
-*(Fill the table with your own mappings of teleop configurations to supported arm brands.)*
+> [!NOTE] 
+> If you are totally new to programming, please spend at least a day to get yourself familiar with basic Python, Ubuntu and GitHub (with the help of Google and AI). At least you should know how to set up Ubuntu system, git clone, pip install, use interpreters (VS Code, Cursor, PyCharm, etc.) and directly run commands in the terminals.
+
+1. 💵 **Buy your parts**: [Bill of Materials]()
+2. 🖨️ **Print your stuff**: [3D printing]()
+3. 🔨 [**Assemble**!]()
+4. 💻 **Software**: [Get your robot moving!](https://github.com/yanwen-zou/UArm-Cross-Embodiment-Teleoperation/blob/main/howtoplay.md)
+
+
+<!-- ---
+
+## ⚙️ Hardware Assembly
+
+> 📚 **Detailed build instructions coming soon!**
+
+We're preparing comprehensive documentation including:
+- 📋 Complete parts list
+- 🔌 Wiring diagrams
+- 🔧 Mechanical assembly guide
+- 🎥 Video tutorials
+
+**Stay tuned for the Google Drive link with full documentation!** -->
 
 ---
 
-## SAPIEN Simulation *(Coming Soon)*
-Upcoming release will provide a SAPIEN environment mirroring the physical teleop setup, allowing rapid prototyping and testing in simulation.
+## 🔮 Roadmap
+
+### 🎯 Coming Soon
+- [ ] **SAPIEN Simulation Environment**: Install and Play!
+  - Virtual teleop setup mirroring physical hardware
+  - Rapid prototyping and testing capabilities
+  - Integration with existing SAPIEN workflows
+
+### 🚀 Future Features
+- [ ] **ROS2 Support**
+- [ ] **Docker Image**
+- [ ] **Humanoid System: Config4**
 
 ---
 
-## Contributing
-Feel free to open issues or submit pull requests for bug fixes, new follower-arm modules, or documentation improvements.
+## 🤝 Contributing
+
+We welcome contributions! Here's how you can help:
+
+### 💡 Feature Requests
+
+### 🔧 Code Contributions
+
+### 🤖 Adding New Robot Support
 
 ---
 
-## License
-To be determined.
+## 👥 Main Contributors
+
+- **Yanwen Zou** - 
+- **Junda Huang** - 
+- **Gaotian Wang** - 
+
+This project builds upon the excellent work of:
+- [LeRobot](https://github.com/huggingface/lerobot) - The foundation for robot learning
+- [SO-100/SO-101](https://github.com/TheRobotStudio/SO-ARM100) - Hardware inspiration
+- [XLeRobot](https://github.com/Vector-Wangel/XLeRobot) - Extended robot support
+
+Thanks to all the talented contributors behind these detailed and professional projects!
+
+---
+
+<div align="center">
+
+**Made with ❤️ for the robotics community**
+
+[![GitHub stars](https://img.shields.io/github/stars/yanwen-zou/UArm-Cross-Embodiment-Teleoperation?style=social)](https://github.com/yanwen-zou/UArm-Cross-Embodiment-Teleoperation)
+[![GitHub forks](https://img.shields.io/github/forks/yanwen-zou/UArm-Cross-Embodiment-Teleoperation?style=social)](https://github.com/yanwen-zou/UArm-Cross-Embodiment-Teleoperation)
+
+</div>
