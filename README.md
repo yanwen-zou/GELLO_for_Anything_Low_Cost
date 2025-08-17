@@ -14,6 +14,7 @@
   <img src="pics/Dobot.gif" width="30%" alt="Dobot Demo" />
   <img src="pics/Arx.gif" width="30%" alt="ARX Demo" />
 </p>
+
 ---
 
 
@@ -36,7 +37,7 @@
 - [Overview](#-overview)
 - [✨ Features](#-features)
 - [💵 Total Cost](#-total-cost-)
-- [🤖 Supported Robots](#-supported-robots)
+- [🤖 Supported Robots (find your robot in the list!)](#-supported-robots)
 - [🚀 Quick Start](#-quick-start)
 - [🔮 Roadmap](#-roadmap)
 - [🤝 Contributing](#-contributing)
@@ -85,8 +86,8 @@ LeRobot Everything is a **low-cost, universal, leader-follower teleoperation sys
 
 | Price | US | EU | CN |
 | --- | --- | --- | --- |
-| **Basic** (use your laptop) | **~$60** | **~€60** | **~¥499** |
-| ↑ Servos | +$60 | +€60 | +¥499 |
+| **Basic** (use your laptop) | **~$60** | **~€60** | **~¥399** |
+| ↑ Servos | +$60 | +€60 | +¥399 |
 
 ---
 
@@ -94,9 +95,9 @@ LeRobot Everything is a **low-cost, universal, leader-follower teleoperation sys
 
 | Configuration | Compatible Robot Arms | Status |
 |---------------|----------------------|---------|
-| **Config 1** | Xarm7, Fanuc LR Mate 200iD, Trossen ALOHA, Agile PiPER, Realman RM65B, KUKA LBR iiSY Cobot | ✅ Ready |
-| **Config 2** | Dobot CR5, UR5, ARX R5*, AUBO i5, JAKA Zu7 | ✅ Ready |
-| **Config 3** | Franka FR3, Franka Emika Panda, Flexiv Rizon, Realman RM75B | ✅ Ready |
+| [**Config 1**](https://github.com/yanwen-zou/UArm-Cross-Embodiment-Teleoperation/tree/main/mechanical/Config1_STL) | Xarm7, Fanuc LR Mate 200iD, Trossen ALOHA, Agile PiPER, Realman RM65B, KUKA LBR iiSY Cobot | ✅ Ready |
+| [**Config 2**](https://github.com/yanwen-zou/UArm-Cross-Embodiment-Teleoperation/tree/main/mechanical/Config2_STL) | Dobot CR5, UR5, ARX R5*, AUBO i5, JAKA Zu7 | ✅ Ready |
+| [**Config 3**](https://github.com/yanwen-zou/UArm-Cross-Embodiment-Teleoperation/tree/main/mechanical/Config3_STL) | Franka FR3, Franka Emika Panda, Flexiv Rizon, Realman RM75B | ✅ Ready |
 
 > 💡 **Need support for a different robot?** Check our [Contributing](#-contributing) section!
 
@@ -159,6 +160,7 @@ We welcome contributions! Here's how you can help:
 ## 👥 Main Contributors
 
 - **Yanwen Zou** - 
+- **?** - 
 - **Junda Huang** - 
 - **Gaotian Wang** - 
 
