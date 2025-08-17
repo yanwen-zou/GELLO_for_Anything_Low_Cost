@@ -19,7 +19,7 @@
 
 
 >**🚀 Bringing Leader-Follower teleoperation system to every real robot and robot arm -- Cheaper, Smoother, Plug-and-Play**  
-**💵 Starts from $60 cost and ⏰ <1hrs total assembly time!! Then controls any robot arm system!!**
+**💵 Starts from $60 cost!! Then controls any robot arm system!!**
 
 *Built upon the giants: [LeRobot](https://github.com/huggingface/lerobot), [SO-100/SO-101](https://github.com/TheRobotStudio/SO-ARM100), [XLeRobot](https://github.com/Vector-Wangel/XLeRobot#)*
 
@@ -28,7 +28,7 @@
 # 📰 News 
 
 
-- 2025-08-15: **LeRobot Everything 0.1.0** hardware setup, the 1st version fully capable for three major robot arm configurations in ROS2, starts from 60$. 
+- 2025-08-15: **LeRobot Everything 0.1.0** hardware setup, the 1st version fully capable for three major robot arm configurations in ROS1, starts from 60$. 
 
 ---
 
