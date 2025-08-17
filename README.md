@@ -161,7 +161,9 @@ We welcome contributions! Here's how you can help:
 ## 👥 Main Contributors
 
 - **Yanwen Zou** - 
-- **?** - 
+- **Zhaoye Zhou** -
+- **Zewei Ye** -
+- **Chenyang Shi** - 
 - **Junda Huang** - 
 - **Gaotian Wang** - 
 
