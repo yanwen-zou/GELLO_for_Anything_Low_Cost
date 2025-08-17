@@ -87,7 +87,7 @@ LeRobot Everything is a **low-cost, universal, leader-follower teleoperation sys
 | Price | US | EU | CN |
 | --- | --- | --- | --- |
 | **Basic** (use your laptop) | **~$60** | **~€60** | **~¥360** |
-| ↑ Servos | +$60 | +€60 | +¥399 |
+| ↑ Servos | +$60 | +€60 | +¥405 |
 
 ---
 
