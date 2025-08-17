@@ -86,7 +86,7 @@ LeRobot Everything is a **low-cost, universal, leader-follower teleoperation sys
 
 | Price | US | EU | CN |
 | --- | --- | --- | --- |
-| **Basic** (use your laptop) | **~$60** | **~€60** | **~¥399** |
+| **Basic** (use your laptop) | **~$60** | **~€60** | **~¥360** |
 | ↑ Servos | +$60 | +€60 | +¥399 |
 
 ---
@@ -110,7 +110,7 @@ LeRobot Everything is a **low-cost, universal, leader-follower teleoperation sys
 
 1. 💵 **Buy your parts**: [Bill of Materials](https://docs.google.com/document/d/1TjhJOeJXsD5kmoYF-kuWfPju6WSUeSnivJiU7TH4vWs/edit?tab=t.0#heading=h.k991lzlarfb8)
 2. 🖨️ **Print your stuff**: [3D printing](https://github.com/yanwen-zou/UArm-Cross-Embodiment-Teleoperation/tree/main/mechanical)
-3. 🔨 [**Assemble**!](Coming Soon)()
+3. 🔨 [**Assemble**!](Coming Soon)
 4. 💻 **Software**: [Get your robot moving!](https://github.com/yanwen-zou/UArm-Cross-Embodiment-Teleoperation/blob/main/howtoplay.md)
    
 For detailed hardware guide, check  [Hardware Guide](https://docs.google.com/document/d/1TjhJOeJXsD5kmoYF-kuWfPju6WSUeSnivJiU7TH4vWs/edit?tab=t.0#heading=h.k991lzlarfb8)
